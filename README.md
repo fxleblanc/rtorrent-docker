@@ -12,6 +12,15 @@ ruTorrent is a front-end for the popular Bittorrent client rtorrent.
 
 This Dockerfile sets up rtorrent with rutorrent, it is based on Alpine Linux and uses Nginx and php-fpm
 
+### Build
+
+The admin password is set at build time. As an example:
+```
+docker build -t rtorrent --build-arg admin_pass=secret .
+```
+
+### Running
+
 This image contains 2 volumes that you can override with host or data container volumes:
 - /downloads : your downloads folder
 - /rutorrent : rutorrent files

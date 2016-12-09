@@ -16,6 +16,7 @@ RUN apk add --update \
     git \
     geoip \
     ffmpeg \
+    apache2-utils \
     && git clone https://github.com/Novik/ruTorrent.git /rutorrent \
     && mkdir -p /tmp/nginx/client-body /downloads/incoming /downloads/completed /downloads/watched /downloads/sessions /tmp/rtorrent \
     && adduser -D -h / -u 5001 rtorrent \
@@ -40,7 +41,8 @@ COPY supervisord-rtorrent.ini /etc/supervisor.d/supervisord-rtorrent.ini
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY auth_file /etc/nginx/auth_file
+ARG admin_pass
+RUN htpasswd -bn admin $admin_pass > /etc/nginx/auth_file
 
 COPY rtorrent.conf /.rtorrent.rc
 
